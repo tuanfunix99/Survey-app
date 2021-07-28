@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 8080;
 const app = express();
 
 //router
-app.get('/greeting', (req, res, next) => {
+app.get('/', (req, res, next) => {
     res.send({hi: 'hello'});
 })
 
