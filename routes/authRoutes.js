@@ -14,25 +14,24 @@ router.get(
 //get auth google callback
 router.get(
   "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function (req, res) {
-    // Successful authentication, redirect home.
-    res.redirect("/api/user_current");
+  passport.authenticate("google"),
+  (req, res) => {
+    res.redirect('/surveys');
   }
 );
 
-
 //log out
-router.get('/api/logout', (req, res) => {
+router.get("/api/logout", (req, res) => {
+  console.log('logout');
   req.logOut();
-  res.send(req.user);
-})
-
+  res.redirect('/');
+});
 
 //
-router.get('/api/user_current', (req, res) => {
+router.get("/api/current_user", (req, res) => {
   res.send(req.user);
-})
+});
+
 
 //export the module
 module.exports = router;

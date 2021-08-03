@@ -7,6 +7,9 @@ require("./database/mongodb");
 const passport = require("passport");
 const keys = require("./config/keys");
 var cookieSession = require("cookie-session");
+const bodyParser = require("body-parser");
+const billingRoutes = require("./routes/billingRoutes");
+const path = require("path");
 
 //variables default
 const PORT = process.env.PORT || 8080;
@@ -14,12 +17,18 @@ const PORT = process.env.PORT || 8080;
 //Instantiate app
 const app = express();
 
+app.use(express.json());
+
 //use cors
 app.use(cors());
 
+//use body-parser
+app.use(bodyParser.urlencoded({extended: true}));
+
+//config cookie
 app.use(
   cookieSession({
-    maxAge: 60 * 60 * 1000,
+    maxAge: 24 * 60 * 60 * 1000,
     keys: [keys.cookieKey],
   })
 );
@@ -30,6 +39,16 @@ app.use(passport.session());
 
 //use routes
 app.use(authRoutes);
+app.use(billingRoutes);
+
+
+if(process.env.NODE_ENV === 'production'){
+  app.use(express.static('client/build'));
+
+  app.get('*', (req, res, next) => {
+    res.sendFile(path.join(__dirname, 'client', 'build', 'index.html'));
+  })
+}
 
 //listen server
 app.listen(PORT, () => {
