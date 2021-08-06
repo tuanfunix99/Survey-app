@@ -1,8 +1,10 @@
 
 import authAction from './authAction';
+import surveyAction from './surveyAction';
 
 const allActions = {
-    authAction
+    authAction,
+    surveyAction
 }
 
 export default allActions;

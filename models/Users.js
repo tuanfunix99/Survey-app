@@ -14,13 +14,13 @@ const userSchema = new Schema({
         type: Number,
         required: true,
         default: 0
-    }
+    },
 })
 
 
-userSchema.methods.addCredit = async function(userId){
-    const user = await Users.findById(userId);
-    user.credits += 1;
+userSchema.methods.addCredit = async function(){
+    const user = this;
+    user.credits += 10;
     await user.save();
     return user;
 }

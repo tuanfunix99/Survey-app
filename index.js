@@ -9,6 +9,7 @@ const keys = require("./config/keys");
 var cookieSession = require("cookie-session");
 const bodyParser = require("body-parser");
 const billingRoutes = require("./routes/billingRoutes");
+const surveyRoutes = require("./routes/surveyRoutes");
 const path = require("path");
 
 //variables default
@@ -24,6 +25,7 @@ app.use(cors());
 
 //use body-parser
 app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.json());
 
 //config cookie
 app.use(
@@ -40,6 +42,7 @@ app.use(passport.session());
 //use routes
 app.use(authRoutes);
 app.use(billingRoutes);
+app.use(surveyRoutes);
 
 
 if(process.env.NODE_ENV === 'production'){
